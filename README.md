@@ -1,7 +1,7 @@
 ### 进入工作路径
 
 ```bash
-cd $GOPATH/src/github.com/hyperledger/fabric/accentrix/configtx
+cd $GOPATH/src/github.com/hyperledger/fabric/fabric-romengine/deploy/configtx
 ```
 
 ### 设置工作路径

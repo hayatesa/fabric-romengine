@@ -222,8 +222,8 @@ Orderer: &OrdererDefaults
         Consenters:
             - Host: orderer.romengine.com
               Port: 7050
-              ClientTLSCert: ../organizations/ordererOrganizations/etcdraft.com/orderers/orderer.etcdraft.com/tls/server.crt
-              ServerTLSCert: ../organizations/ordererOrganizations/etcdraft.com/orderers/orderer.etcdraft.com/tls/server.crt
+              ClientTLSCert: ../organizations/ordererOrganizations/romengine.com/orderers/orderer.etcdraft.com/tls/server.crt
+              ServerTLSCert: ../organizations/ordererOrganizations/romengine.com/orderers/orderer.etcdraft.com/tls/server.crt
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s # 出块时间间隔
