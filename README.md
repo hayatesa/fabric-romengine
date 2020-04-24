@@ -1,13 +1,13 @@
 ### 进入工作路径
 
 ```bash
-cd $GOPATH/src/github.com/hyperledger/fabric/fabric-romengine/deploy/configtx
+cd $GOPATH/src/github.com/hyperledger/fabric/fabric-romengine/deploy
 ```
 
 ### 设置工作路径
 
 ```bash
-export FABRIC_CFG_PATH=$GOPATH/src/github.com/hyperledger/fabric/accentrix/deploy
+export FABRIC_CFG_PATH=$GOPATH/src/github.com/hyperledger/fabric/fabric-romengine/deploy/configtx
 ```
 
 ### 环境清理
