@@ -121,7 +121,7 @@ services:
     networks:
       - test
   cli:
-    container_name: cliMagnetoCorp
+    container_name: cli
     image: hyperledger/fabric-tools:2.0.0-beta
     tty: true
     environment:
