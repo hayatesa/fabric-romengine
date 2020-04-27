@@ -141,7 +141,7 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - ./../chaincode:/opt/gopath/src/github.com/chaincode
+      - ./../application:/opt/gopath/src/github.com/application
       - ./config:/etc/hyperledger/fabric
       - ./../../config:/etc/hyperledger/fabric/config
       - ./organizations/peerOrganizations/org2.romengine.com:/opt/gopath/src/github.com/
