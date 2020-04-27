@@ -34,7 +34,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-      - ./system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ./config/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ./organizations/ordererOrganizations/romengine.com/orderers/orderer.romengine.com/msp:/var/hyperledger/orderer/msp
       - ./organizations/ordererOrganizations/romengine.com/orderers/orderer.romengine.com/tls/:/var/hyperledger/orderer/tls
       - orderer.romengine.com:/var/hyperledger/production/orderer
@@ -140,6 +140,8 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
+      - ./../chaincode:/opt/gopath/src/github.com/chaincode
+      - ./config:/etc/hyperledger/fabric
       - ./organizations/peerOrganizations/org2.romengine.com:/opt/gopath/src/github.com/
       - ./organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
     networks:
