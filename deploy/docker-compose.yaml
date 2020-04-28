@@ -12,7 +12,7 @@ services:
     image: hyperledger/fabric-orderer:latest
     environment:
       - FABRIC_LOGGING_SPEC=DEBUG
-      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0 # 暴露地址
       - ORDERER_GENERAL_LISTENPORT=7050
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
@@ -50,11 +50,11 @@ services:
     image: hyperledger/fabric-peer:latest
     environment:
       #Generic peer variables
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock # docker 服务注入
       # the following setting starts chaincode containers on the same
       # bridge network as the peers
       # https://docs.docker.com/compose/networking/
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=romengine_test
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=romengine_net # chaincode 与 peer 节点使用同一个网络，如果不设置，链码可能连接不上 peer 节点
       - FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
@@ -66,21 +66,22 @@ services:
       # Peer specific variabes
       - CORE_PEER_ID=peer0.org1.romengine.com
       - CORE_PEER_ADDRESS=peer0.org1.romengine.com:7051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051 # peer节点 grpc 服务端口（将 peer暴露给 chaincode）
       - CORE_PEER_CHAINCODEADDRESS=peer0.org1.romengine.com:7052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052 # chaincode 事件监听端口
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.romengine.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.romengine.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
     volumes:
       - /var/run/:/host/var/run/
-      - ./organizations/peerOrganizations/org1.romengine.com/peers/peer0.org1.romengine.com/msp:/etc/hyperledger/fabric/msp
+      - ./organizations/peerOrganizations/org1.romengine.com/peers/peer0.org1.romengine.com/msp:/etc/hyperledger/fabric/msp # 节点的 msp 证书
       - ./organizations/peerOrganizations/org1.romengine.com/peers/peer0.org1.romengine.com/tls:/etc/hyperledger/fabric/tls
       - peer0.org1.romengine.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
       - 7051:7051
+      - 7052:7052
     extra_hosts:
       - "romengine.com:192.168.123.34"
       - "orderer.romengine.com:192.168.123.34"
@@ -98,7 +99,7 @@ services:
       # the following setting starts chaincode containers on the same
       # bridge network as the peers
       # https://docs.docker.com/compose/networking/
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=romengine_test
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=romengine_net
       - FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
@@ -125,6 +126,7 @@ services:
     command: peer node start
     ports:
       - 9051:9051
+      - 9052:9052
     extra_hosts:
       - "romengine.com:192.168.123.34"
       - "orderer.romengine.com:192.168.123.34"
@@ -133,7 +135,7 @@ services:
       - "peer0.org1.romengine.com:192.168.123.34"
       - "peer0.org2.romengine.com:192.168.123.34"
 
-  cli:
+  cli: # peer 节点客户端（最多只能同时连接一个节点），交易都是由客户端发起的
     container_name: cli
     image: hyperledger/fabric-tools:2.0.0-beta
     tty: true
@@ -154,7 +156,7 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - ./../application:/opt/gopath/src/github.com/hyperledger/fabric/application
+      - ./../application:/opt/gopath/src/github.com/hyperledger/fabric/application # 注入链码相关文件，用于安装链码
       - ./config:/opt/gopath/src/github.com/hyperledger/fabric/config
       - ./organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
     extra_hosts:
