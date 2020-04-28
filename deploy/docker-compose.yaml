@@ -154,8 +154,8 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - ./../application:/opt/gopath/src/github.com/application
-      - ./config:/etc/hyperledger/fabric
+      - ./../application:/opt/gopath/src/github.com/hyperledger/fabric/application
+      - ./config:/opt/gopath/src/github.com/hyperledger/fabric/config
       - ./../../config:/etc/hyperledger/fabric/config
       - ./organizations/peerOrganizations/org2.romengine.com:/opt/gopath/src/github.com/
       - ./organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
