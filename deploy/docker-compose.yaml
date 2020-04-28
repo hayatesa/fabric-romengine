@@ -156,8 +156,38 @@ services:
       - /var/run/:/host/var/run/
       - ./../application:/opt/gopath/src/github.com/hyperledger/fabric/application
       - ./config:/opt/gopath/src/github.com/hyperledger/fabric/config
-      - ./../../config:/etc/hyperledger/fabric/config
-      - ./organizations/peerOrganizations/org2.romengine.com:/opt/gopath/src/github.com/
+      - ./organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+    extra_hosts:
+      - "romengine.com:192.168.123.34"
+      - "orderer.romengine.com:192.168.123.34"
+      - "org1.romengine.com:192.168.123.34"
+      - "org2.romengine.com:192.168.123.34"
+      - "peer0.org1.romengine.com:192.168.123.34"
+      - "peer0.org2.romengine.com:192.168.123.34"
+
+  cli2:
+    container_name: cli2
+    image: hyperledger/fabric-tools:2.0.0-beta
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=DEBUG
+      # - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.org2.romengine.com:9051
+      - CORE_PEER_LOCALMSPID=Org2MSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.romengine.com/peers/peer0.org2.romengine.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.romengine.com/peers/peer0.org2.romengine.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.romengine.com/peers/peer0.org2.romengine.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.romengine.com/users/Admin@org2.romengine.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./../application:/opt/gopath/src/github.com/hyperledger/fabric/application
+      - ./config:/opt/gopath/src/github.com/hyperledger/fabric/config
       - ./organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
     extra_hosts:
       - "romengine.com:192.168.123.34"
