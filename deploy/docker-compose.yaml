@@ -7,16 +7,7 @@ volumes:
 
 services:
 
-  net.base:
-    extra_hosts:
-      - "romengine.com:192.168.123.34"
-      - "orderer.romengine.com:192.168.123.34"
-      - "org1.romengine.com:192.168.123.34"
-      - "org2.romengine.com:192.168.123.34"
-
   orderer.romengine.com:
-    extends:
-      service: net.base
     container_name: orderer.romengine.com
     image: hyperledger/fabric-orderer:latest
     environment:
@@ -46,10 +37,15 @@ services:
       - orderer.romengine.com:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
+    extra_hosts:
+      - "romengine.com:192.168.123.34"
+      - "orderer.romengine.com:192.168.123.34"
+      - "org1.romengine.com:192.168.123.34"
+      - "org2.romengine.com:192.168.123.34"
+      - "peer0.org1.romengine.com:192.168.123.34"
+      - "peer0.org2.romengine.com:192.168.123.34"
 
   peer0.org1.romengine.com:
-    extends:
-      service: net.base
     container_name: peer0.org1.romengine.com
     image: hyperledger/fabric-peer:latest
     environment:
@@ -85,10 +81,15 @@ services:
     command: peer node start
     ports:
       - 7051:7051
+    extra_hosts:
+      - "romengine.com:192.168.123.34"
+      - "orderer.romengine.com:192.168.123.34"
+      - "org1.romengine.com:192.168.123.34"
+      - "org2.romengine.com:192.168.123.34"
+      - "peer0.org1.romengine.com:192.168.123.34"
+      - "peer0.org2.romengine.com:192.168.123.34"
 
   peer0.org2.romengine.com:
-    extends:
-      service: net.base
     container_name: peer0.org2.romengine.com
     image: hyperledger/fabric-peer:latest
     environment:
@@ -124,9 +125,15 @@ services:
     command: peer node start
     ports:
       - 9051:9051
+    extra_hosts:
+      - "romengine.com:192.168.123.34"
+      - "orderer.romengine.com:192.168.123.34"
+      - "org1.romengine.com:192.168.123.34"
+      - "org2.romengine.com:192.168.123.34"
+      - "peer0.org1.romengine.com:192.168.123.34"
+      - "peer0.org2.romengine.com:192.168.123.34"
+
   cli:
-    extends:
-      service: net.base
     container_name: cli
     image: hyperledger/fabric-tools:2.0.0-beta
     tty: true
@@ -152,3 +159,10 @@ services:
       - ./../../config:/etc/hyperledger/fabric/config
       - ./organizations/peerOrganizations/org2.romengine.com:/opt/gopath/src/github.com/
       - ./organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+    extra_hosts:
+      - "romengine.com:192.168.123.34"
+      - "orderer.romengine.com:192.168.123.34"
+      - "org1.romengine.com:192.168.123.34"
+      - "org2.romengine.com:192.168.123.34"
+      - "peer0.org1.romengine.com:192.168.123.34"
+      - "peer0.org2.romengine.com:192.168.123.34"
