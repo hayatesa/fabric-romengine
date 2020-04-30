@@ -5,6 +5,11 @@ volumes:
   peer0.org1.romengine.com:
   peer0.org2.romengine.com:
 
+networks:
+  basic:
+    external:
+      name: romengine_net
+
 services:
 
   orderer.romengine.com:
@@ -44,6 +49,8 @@ services:
       - "org2.romengine.com:192.168.123.34"
       - "peer0.org1.romengine.com:192.168.123.34"
       - "peer0.org2.romengine.com:192.168.123.34"
+    networks:
+      - basic
 
   peer0.org1.romengine.com:
     container_name: peer0.org1.romengine.com
@@ -89,6 +96,8 @@ services:
       - "org2.romengine.com:192.168.123.34"
       - "peer0.org1.romengine.com:192.168.123.34"
       - "peer0.org2.romengine.com:192.168.123.34"
+    networks:
+      - basic
 
   peer0.org2.romengine.com:
     container_name: peer0.org2.romengine.com
@@ -165,6 +174,8 @@ services:
       - "org2.romengine.com:192.168.123.34"
       - "peer0.org1.romengine.com:192.168.123.34"
       - "peer0.org2.romengine.com:192.168.123.34"
+    networks:
+      - basic
 
   cli2:
     container_name: cli2
@@ -196,3 +207,5 @@ services:
       - "org2.romengine.com:192.168.123.34"
       - "peer0.org1.romengine.com:192.168.123.34"
       - "peer0.org2.romengine.com:192.168.123.34"
+    networks:
+      - basic
