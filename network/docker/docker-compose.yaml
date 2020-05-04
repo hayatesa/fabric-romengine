@@ -36,6 +36,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ../system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../organizations/ordererOrganizations/romengine.com/orderers/orderer.romengine.com/msp:/var/hyperledger/orderer/msp
       - ../organizations/ordererOrganizations/romengine.com/orderers/orderer.romengine.com/tls/:/var/hyperledger/orderer/tls
@@ -81,6 +82,7 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.romengine.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/:/host/var/run/
       - ../organizations/peerOrganizations/org1.romengine.com/peers/peer0.org1.romengine.com/msp:/etc/hyperledger/fabric/msp # 节点的 msp 证书
       - ../organizations/peerOrganizations/org1.romengine.com/peers/peer0.org1.romengine.com/tls:/etc/hyperledger/fabric/tls
@@ -129,6 +131,7 @@ services:
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.romengine.com:9051
       - CORE_PEER_LOCALMSPID=Org2MSP
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/:/host/var/run/
       - ../organizations/peerOrganizations/org2.romengine.com/peers/peer0.org2.romengine.com/msp:/etc/hyperledger/fabric/msp
       - ../organizations/peerOrganizations/org2.romengine.com/peers/peer0.org2.romengine.com/tls:/etc/hyperledger/fabric/tls
@@ -165,6 +168,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/:/host/var/run/
       - ../../application:/opt/gopath/src/github.com/hyperledger/fabric/application # 注入链码相关文件，用于安装链码
       - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/channel-artifacts
@@ -198,6 +202,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/:/host/var/run/
       - ../../application:/opt/gopath/src/github.com/hyperledger/fabric/application
       - ../channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/channel-artifacts
