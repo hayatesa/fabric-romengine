@@ -36,7 +36,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-      - ./config/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ./system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ./organizations/ordererOrganizations/romengine.com/orderers/orderer.romengine.com/msp:/var/hyperledger/orderer/msp
       - ./organizations/ordererOrganizations/romengine.com/orderers/orderer.romengine.com/tls/:/var/hyperledger/orderer/tls
       - orderer.romengine.com:/var/hyperledger/production/orderer
@@ -165,7 +165,7 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - ./../application:/opt/gopath/src/github.com/hyperledger/fabric/application # 注入链码相关文件，用于安装链码
-      - ./config:/opt/gopath/src/github.com/hyperledger/fabric/config
+      - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/channel-artifacts
       - ./organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
     extra_hosts:
       - "romengine.com:192.168.123.34"
@@ -198,7 +198,7 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - ./../application:/opt/gopath/src/github.com/hyperledger/fabric/application
-      - ./config:/opt/gopath/src/github.com/hyperledger/fabric/config
+      - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/channel-artifacts
       - ./organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
     extra_hosts:
       - "romengine.com:192.168.123.34"
