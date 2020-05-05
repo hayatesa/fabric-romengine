@@ -16,7 +16,7 @@ services:
     container_name: orderer.romengine.com
     image: hyperledger/fabric-orderer:latest
     environment:
-      - FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0 # 暴露地址
       - ORDERER_GENERAL_LISTENPORT=7050
       - ORDERER_GENERAL_GENESISMETHOD=file
@@ -64,7 +64,7 @@ services:
       # https://docs.docker.com/compose/networking/
       - CORE_VM_DOCKER_ATTACHSTDOUT=true
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=romengine_net # chaincode 与 peer 节点使用同一个网络，如果不设置，链码可能连接不上 peer 节点
-      - FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
@@ -113,7 +113,7 @@ services:
       # https://docs.docker.com/compose/networking/
       - CORE_VM_DOCKER_ATTACHSTDOUT=true
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=romengine_net
-      - FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
@@ -158,7 +158,7 @@ services:
     environment:
       - GOPATH=/opt/gopath
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=cli
       - CORE_PEER_ADDRESS=peer0.org1.romengine.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
@@ -192,7 +192,7 @@ services:
     environment:
       - GOPATH=/opt/gopath
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=cli
       - CORE_PEER_ADDRESS=peer0.org2.romengine.com:9051
       - CORE_PEER_LOCALMSPID=Org2MSP
