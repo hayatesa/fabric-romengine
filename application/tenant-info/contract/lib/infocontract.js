@@ -89,9 +89,10 @@ class TenantInfoContract extends Contract {
     // Retrieve the current paper using key fields provided
     console.info('============= START : getTenant ===========');
     let tenantKey = TenantInfo.makeKey([id, idType]);
-    console.log(`{id: ${id}, idType: ${idType}, key: ${tenantKey}`)
+    let result = await ctx.infoList.getTenant(tenantKey);
+    console.log(`id: ${id}, idType: ${idType}, key: ${tenantKey}`)
     console.info('============= END : getTenant ===========');
-    return await ctx.infoList.getTenant(tenantKey);
+    return result;
   }
 
 }
