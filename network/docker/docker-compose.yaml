@@ -148,6 +148,8 @@ services:
       - "org2.romengine.com:192.168.123.34"
       - "peer0.org1.romengine.com:192.168.123.34"
       - "peer0.org2.romengine.com:192.168.123.34"
+    networks:
+      - basic
 
   cli: # peer 节点客户端（最多只能同时连接一个节点），交易都是由客户端发起的
     container_name: cli
