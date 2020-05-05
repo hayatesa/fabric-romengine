@@ -91,6 +91,7 @@ class TenantInfoContract extends Contract {
     let tenantKey = TenantInfo.makeKey([id, idType]);
     let result = await ctx.infoList.getTenant(tenantKey);
     console.log(`id: ${id}, idType: ${idType}, key: ${tenantKey}`)
+    console.log(`result: ${result}`)
     console.info('============= END : getTenant ===========');
     return result;
   }
