@@ -18,7 +18,7 @@ const LeaseList = require('./leaselist.js');
 /**
  * A custom context provides easy access to list of all rentals
  */
-class UserContext extends Context {
+class RentalContext extends Context {
 
     constructor() {
         super();
@@ -45,7 +45,7 @@ class RentalContract extends Contract {
      * Define a custom context for rental
     */
     createContext() {
-        return new UserContext();
+        return new RentalContext();
     }
 
     /**
@@ -170,13 +170,13 @@ class RentalContract extends Contract {
             throw new Error(`Estate ${estate} dose not exist`);
         }
         let leaseKey = Lease.makeKey([id, owner, tenant]);
-        let lease = await ctx.leaseList.getLease(leaseKey);
-        if (lease) {
+        let leaseObj = await ctx.leaseList.getLease(leaseKey);
+        if (leaseObj) {
             throw new Error(`Lease ${leaseKey} already exists`);
         }
 
-        lease = Lease.createInstance(id, estate, owner, tenant, estateObj.getPrice(), startDate, endDate);
-        return lease
+        leaseObj = Lease.createInstance(id, estate, owner, tenant, estateObj.getPrice(), startDate, endDate);
+        return leaseObj;
 
     }
 
