@@ -130,7 +130,7 @@ class RentalContract extends Contract {
         }
 
         esateObj = Estate.createInstance(id, owner, '', price, metadata);
-        let estates = owner.getEstates() || [];
+        let estates = ownerObj.getEstates() || [];
         estates.push(id);
         ownerObj.setEstates(estates);
 
