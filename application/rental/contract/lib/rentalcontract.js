@@ -168,9 +168,6 @@ class RentalContract extends Contract {
         if (!estate || estate === '') {
             throw new Error(`estate should not be empty`);
         }
-        if (!owner || owner === '') {
-            throw new Error(`owner should not be empty`);
-        }
         if (!tenant || tenant === '') {
             throw new Error(`tenant should not be empty`);
         }
@@ -193,7 +190,7 @@ class RentalContract extends Contract {
             throw new Error(`Estate ${estate} dose not exist`);
         }
 
-        let leaseKey = Lease.makeKey([id, owner, tenant]);
+        let leaseKey = Lease.makeKey([id, estateObj.getOwner(), tenant]);
         let leaseObj = await ctx.leaseList.getLease(leaseKey);
         if (leaseObj) {
             throw new Error(`Lease ${leaseKey} already exists`);
