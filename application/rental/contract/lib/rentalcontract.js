@@ -156,12 +156,11 @@ class RentalContract extends Contract {
      * @param {Context} ctx the transaction context
      * @param {String} id
      * @param {String} estate
-     * @param {String} owner
      * @param {String} tenant
      * @param {String} startDate
      * @param {String} endDate
     */
-    async createLease(ctx, id, estate, owner, tenant, startDate, endDate) {
+    async createLease(ctx, id, estate, tenant, startDate, endDate) {
 
         if (!id || id === '') {
             throw new Error(`id should not be empty`);
@@ -182,13 +181,7 @@ class RentalContract extends Contract {
             throw new Error(`endDate should not be empty`);
         }
 
-        let ownerKey = User.makeKey([owner])
-        let ownerObj = await ctx.userList.getUser(ownerKey);
-        if (!ownerObj) {
-            throw new Error(`Owner ${owner} dose not exist`);
-        }
-
-        let tenantKey = User.makeKey([owner])
+        let tenantKey = User.makeKey([tenant])
         let tenantObj = await ctx.userList.getUser(tenantKey);
         if (!tenantObj) {
             throw new Error(`Owner ${tenant} dose not exist`);
@@ -199,14 +192,19 @@ class RentalContract extends Contract {
         if (!estateObj) {
             throw new Error(`Estate ${estate} dose not exist`);
         }
+
         let leaseKey = Lease.makeKey([id, owner, tenant]);
         let leaseObj = await ctx.leaseList.getLease(leaseKey);
         if (leaseObj) {
             throw new Error(`Lease ${leaseKey} already exists`);
         }
 
-        leaseObj = Lease.createInstance(id, estate, owner, tenant, estateObj.getPrice(), startDate, endDate);
-        return leaseObj;
+        leaseObj = Lease.createInstance(id, estate, estateObj.getOwner(), tenant, estateObj.getPrice(), startDate, endDate);
+        await ctx.leaseList.addLease(leaseObj);
+
+        estateObj.setTenant(tenant);
+        await ctx.estateList.updateEstate(estateObj);
+        return { leaseObj, estateObj };
 
     }
 
