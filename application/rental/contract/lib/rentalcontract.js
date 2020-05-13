@@ -58,6 +58,16 @@ class RentalContract extends Contract {
         console.log('Instantiate the contract');
     }
 
+    async queryUser(ctx, id) {
+
+        if (!id || id === '') {
+            throw new Error(`id should not be empty`);
+        }
+
+        // Must return a serialized user to caller of smart contract
+        return await ctx.userList.getUser(User.makeKey([id]));
+    }
+
     /**
      * Create user rental
      *
@@ -83,6 +93,16 @@ class RentalContract extends Contract {
 
         // Must return a serialized user to caller of smart contract
         return user;
+    }
+
+    async queryEstate(ctx, id) {
+
+        if (!id || id === '') {
+            throw new Error(`id should not be empty`);
+        }
+
+        // Must return a serialized user to caller of smart contract
+        return await ctx.estateList.getEstate(Estate.makeKey([id]));
     }
 
     /**
@@ -118,6 +138,16 @@ class RentalContract extends Contract {
         await ctx.estateList.addEstate(esateObj);
 
         return { esateObj, ownerObj };
+    }
+
+    async queryLease(ctx, id, owner, tenant) {
+
+        if (!id || id === '') {
+            throw new Error(`id should not be empty`);
+        }
+
+        // Must return a serialized user to caller of smart contract
+        return await ctx.leaseList.getLease(Lease.makeKey([id, owner, tenant]));
     }
 
     /**
