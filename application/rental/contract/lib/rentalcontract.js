@@ -59,6 +59,7 @@ class RentalContract extends Contract {
     }
 
     async queryUser(ctx, id) {
+        console.log('query ' + id);
 
         if (!id || id === '') {
             throw new Error(`id should not be empty`);
@@ -184,7 +185,7 @@ class RentalContract extends Contract {
             throw new Error(`Owner ${tenant} dose not exist`);
         }
 
-        let estateKey = Estate.makeKey([id]);
+        let estateKey = Estate.makeKey([estate]);
         let estateObj = await ctx.estateList.getEstate(estateKey);
         if (!estateObj) {
             throw new Error(`Estate ${estate} dose not exist`);

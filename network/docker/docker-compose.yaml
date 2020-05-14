@@ -88,7 +88,7 @@ services:
       - ../organizations/peerOrganizations/org1.romengine.com/peers/peer0.org1.romengine.com/tls:/etc/hyperledger/fabric/tls
       - peer0.org1.romengine.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
+    command: peer node start --peer-chaincodedev=true
     ports:
       - 7051:7051
       - 7052:7052
@@ -137,7 +137,7 @@ services:
       - ../organizations/peerOrganizations/org2.romengine.com/peers/peer0.org2.romengine.com/tls:/etc/hyperledger/fabric/tls
       - peer0.org2.romengine.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
+    command: peer node start --peer-chaincodedev=true
     ports:
       - 9051:9051
       - 9052:9052
