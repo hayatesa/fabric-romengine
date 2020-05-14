@@ -12,6 +12,7 @@
         "pretest": "npm run lint",
         "test": "nyc mocha test --recursive",
         "start": "fabric-chaincode-node start",
+        "dev": "fabric-chaincode-node start --peer.address 0.0.0.0:7051 --chaincode-id-name rental:1",
         "mocha": "mocha test --recursive"
     },
     "engineStrict": true,
