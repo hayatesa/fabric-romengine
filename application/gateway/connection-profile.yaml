@@ -1,0 +1,56 @@
+---
+name: "papernet.magnetocorp.profile.sample"
+x-type: "hlfv1"
+description: "Sample connection profile for documentation topic"
+version: "1.0"
+channels:
+  rental:
+    orderers:
+      - orderer.romengine.com
+    peers:
+      peer0.org1.romengine.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer0.org2.romengine.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+organizations:
+   Org1:
+     mspid: Org1MSP
+     peers:
+       - peer0.org1.romengine.com
+#     certificateAuthorities:
+#       - ca-magnetocorp
+   Org2:
+     mspid: Org2MSP
+     peers:
+       - peer0.org2.romengine.com
+orderers:
+  orderer.romengine.com:
+    url: grpc://192.168.123.34:7050
+    grpcOptions:
+      ssl-target-name-override: orderer.romengine.com
+peers:
+  peer0.org1.romengine.com:
+    url: grpc://192.168.123.34:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.org1.romengine.com
+      request-timeout: 120001
+  peer0.org2.romengine.com:
+    url: grpc://192.168.123.34:9051
+    grpcOptions:
+      ssl-target-name-override: peer0.org2.romengine.com
+      request-timeout: 120001
+#certificateAuthorities:
+#  ca1-magnetocorp:
+#    url: http://localhost:7054
+#    httpOptions:
+#      verify: false
+#    registrar:
+#      - enrollId: admin
+#        enrollSecret: adminpw
+#    caName: ca-magnetocorp
