@@ -40,7 +40,7 @@ public class RentalController {
                 System.out.println("Use network channel: rental.");
                 Network network = gateway.getNetwork("rental");
 
-                Contract contract = network.getContract(contractName, "org.rentalnet.userlist");
+                Contract contract = network.getContract(contractName, "org.rentalnet.rental");
 
                 // Buy commercial paper
                 System.out.println("Submit commercial paper buy transaction.");
