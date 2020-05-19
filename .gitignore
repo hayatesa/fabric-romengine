@@ -18,3 +18,4 @@ vendor/
 node_modules
 build
 *.iml
+package-lock.json
