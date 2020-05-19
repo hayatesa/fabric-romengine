@@ -3,6 +3,12 @@ name: "papernet.magnetocorp.profile.sample"
 x-type: "hlfv1"
 description: "Sample connection profile for documentation topic"
 version: "1.0"
+client:
+  organization: Org1
+  connection:
+    timeout:
+      peer:
+        endorser: '3000'
 channels:
   rental:
     orderers:
@@ -31,20 +37,30 @@ organizations:
        - peer0.org2.romengine.com
 orderers:
   orderer.romengine.com:
-    url: grpc://192.168.123.34:7050
+    url: grpcs://192.168.123.34:7050
     grpcOptions:
       ssl-target-name-override: orderer.romengine.com
+    tlsCACerts:
+      path:
+        "D:/Dev/projects/fabric-romengine/network/organizations/ordererOrganizations/romengine.com/msp/tlscacerts/tlsca.romengine.com-cert.pem"
 peers:
   peer0.org1.romengine.com:
-    url: grpc://192.168.123.34:7051
+    url: grpcs://192.168.123.34:7051
     grpcOptions:
       ssl-target-name-override: peer0.org1.romengine.com
       request-timeout: 120001
+    tlsCACerts:
+      path:
+        "D:/Dev/projects/fabric-romengine/network/organizations/peerOrganizations/org1.romengine.com/peers/peer0.org1.romengine.com/msp/tlscacerts/tlsca.org1.romengine.com-cert.pem"
   peer0.org2.romengine.com:
-    url: grpc://192.168.123.34:9051
+    url: grpcs://192.168.123.34:9051
     grpcOptions:
       ssl-target-name-override: peer0.org2.romengine.com
       request-timeout: 120001
+  tlsCACerts:
+    path:
+      "D:/Dev/projects/fabric-romengine/network/organizations/peerOrganizations/org2.romengine.com/peers/peer0.org2.romengine.com/msp/tlscacerts/tlsca.org2.romengine.com-cert.pem"
+
 #certificateAuthorities:
 #  ca1-magnetocorp:
 #    url: http://localhost:7054
