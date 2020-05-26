@@ -5,6 +5,7 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const cors = require('koa2-cors')
 
 // const index = require('./routes/index')
 // const users = require('./routes/users')
@@ -14,6 +15,8 @@ const rental = require('./routes/rental')
 onerror(app)
 
 // middlewares
+// 处理跨域，放到中间件的最前面
+app.use(cors());
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
 }))

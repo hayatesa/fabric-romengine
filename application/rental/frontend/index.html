@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <style>
+  ::selection {
+    color: #fff;
+    background: #414141;
+  }
+  </style>
+</head>
+<body style="margin: 20px">
+<div id="app">
+  <el-row :gutter="20">
+    <el-col :span="6">
+      <el-card :body-style="{ padding: '20px' , minHeight: '700px' }">
+        <div style="border-left: 5px solid #409eff;font-size: 24px;padding-left: 10px;margin-bottom: 10px">Search User
+        </div>
+        <el-form :inline="true" :model="userSearchForm" class="demo-form-inline">
+          <el-form-item label="">
+            <el-input v-model="userSearchForm.id" placeholder="User ID"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="searchUser">Search</el-button>
+          </el-form-item>
+        </el-form>
+        <div style="height: 125px;background-color: #f1f3f4;padding: 16px">
+          <span style="font-weight: bold">User ID: </span>{{user.id}}<br>
+          <span style="font-weight: bold">User Name: </span>{{user.name}}<br>
+          <span style="font-weight: bold">Estates: </span>
+          <template v-for="item in user.estates">
+            {{item}}&nbsp;
+          </template>
+        </div>
+        <div
+          style="border-left: 5px solid #409eff;font-size: 24px;padding-left: 10px;margin-bottom: 10px;margin-top: 20px;">
+          Create User
+        </div>
+        <el-form ref="form" :model="userForm" label-width="80px">
+          <el-form-item label="ID">
+            <el-input v-model="userForm.id"></el-input>
+          </el-form-item>
+          <el-form-item label="Name">
+            <el-input v-model="userForm.name"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="createUser">Submit</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </el-col>
+    </el-col>
+    <el-col :span="6">
+      <el-card :body-style="{ padding: '20px' , minHeight: '700px' }">
+        <div style="border-left: 5px solid #409eff;font-size: 24px;padding-left: 10px;margin-bottom: 10px">Search
+          Estate
+        </div>
+        <el-form :inline="true" :model="estateSearchForm" class="demo-form-inline">
+          <el-form-item label="">
+            <el-input v-model="estateSearchForm.id" placeholder="Estate ID"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="searchEstate">Search</el-button>
+          </el-form-item>
+        </el-form>
+        <div style="height: 125px;background-color: #f1f3f4;padding: 16px">
+          <span style="font-weight: bold">Estate ID: </span>{{estate.id}}<br>
+          <span style="font-weight: bold">Owner: </span>{{estate.owner}}<br>
+          <span style="font-weight: bold">Tenant: </span>{{estate.tenant}}<br>
+          <span style="font-weight: bold">price: </span>{{estate.price}}<br>
+          <span style="font-weight: bold">Address: </span>{{estate.metadata.address}}
+        </div>
+        <div
+          style="border-left: 5px solid #409eff;font-size: 24px;padding-left: 10px;margin-bottom: 10px;margin-top: 20px;">
+          Enroll Estate
+        </div>
+        <el-form ref="form" :model="estateForm" label-width="80px">
+          <el-form-item label="ID">
+            <el-input v-model="estateForm.id"></el-input>
+          </el-form-item>
+          <el-form-item label="Owner">
+            <el-input v-model="estateForm.owner"></el-input>
+          </el-form-item>
+          <el-form-item label="Price">
+            <el-input v-model="estateForm.price"></el-input>
+          </el-form-item>
+          <el-form-item label="Address">
+            <el-input v-model="estateForm.metadata.address"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="createEstate">Submit</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </el-col>
+    </el-col>
+    <el-col :span="12">
+      <el-card :body-style="{ padding: '20px' , minHeight: '700px' }">
+        <div style="border-left: 5px solid #409eff;font-size: 24px;padding-left: 10px;margin-bottom: 10px">Search Lease
+        </div>
+        <el-form :inline="true" :model="leaseSearchForm" class="demo-form-inline">
+          <el-form-item>
+            <el-input v-model="leaseSearchForm.id" placeholder="Lease ID"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-input v-model="leaseSearchForm.owner" placeholder="Owner"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-input v-model="leaseSearchForm.tenant" placeholder="Tenant"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="searchLease">Search</el-button>
+          </el-form-item>
+        </el-form>
+        <div style="height: 125px;background-color: #f1f3f4;padding: 16px">
+          <span style="font-weight: bold">User ID: </span>{{lease.id}}<br>
+          <span style="font-weight: bold">Estate: </span>{{lease.estate}}<br>
+          <span style="font-weight: bold">Owner: </span>{{lease.owner}}<br>
+          <span style="font-weight: bold">Tenant: </span>{{lease.tenant}}<br>
+          <span style="font-weight: bold">Price: </span>{{lease.price}}<br>
+          <span style="font-weight: bold">Start Date: </span>{{lease.startDate}}<br>
+          <span style="font-weight: bold">End Date: </span>{{lease.endDate}}<br>
+        </div>
+        <div
+          style="border-left: 5px solid #409eff;font-size: 24px;padding-left: 10px;margin-bottom: 10px;margin-top: 20px;">
+          Create Lease
+        </div>
+        <el-form ref="form" :model="leaseForm" label-width="80px">
+          <el-form-item label="ID">
+            <el-input v-model="leaseForm.id"></el-input>
+          </el-form-item>
+          <el-form-item label="Estate">
+            <el-input v-model="leaseForm.estate"></el-input>
+          </el-form-item>
+          <el-form-item label="Tenant">
+            <el-input v-model="leaseForm.tenant"></el-input>
+          </el-form-item>
+          <el-form-item label="Duration">
+            <el-date-picker
+              v-model="leaseForm.duration"
+              type="daterange"
+              range-separator="-"
+              value-format="yyyy-MM-dd"
+              start-placeholder="Start Date"
+              end-placeholder="End Date">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="createLease">Submit</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </el-col>
+    </el-col>
+  </el-row>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    user: {
+      id: '',
+      name: '',
+      estates: ['', '']
+    },
+    userForm: {
+      id: '',
+      name: ''
+    },
+    userSearchForm: {
+      id: ''
+    },
+    estate: {
+      id: '',
+      owner: '',
+      tenant: '',
+      price: '',
+      metadata: {
+        address: ''
+      }
+    },
+    estateForm: {
+      id: '',
+      owner: '',
+      tenant: '',
+      price: '',
+      metadata: {
+        address: ''
+      }
+    },
+    estateSearchForm: {
+      id: '',
+    },
+    lease: {
+      id: '',
+      estate: '',
+      owner: '',
+      tenant: '',
+      price: '',
+      startDate: '',
+      endDate: '',
+    },
+    leaseForm: {
+      id: '',
+      estate: '',
+      owner: '',
+      tenant: '',
+      price: '',
+      startDate: '',
+      endDate: '',
+      duration: []
+    },
+    leaseSearchForm: {
+      id: '',
+      owner: '',
+      tenant: '',
+    },
+  },
+  methods: {
+    async searchUser() {
+      const res = await axios.get(`http://127.0.0.1:3000/rental/user/${this.userSearchForm.id}`)
+      this.user = res.data
+    },
+    async createUser() {
+      const res = await axios.post('http://127.0.0.1:3000/rental/user', this.userForm)
+      console.log(res.data)
+    },
+    async searchEstate() {
+      const res = await axios.get(`http://127.0.0.1:3000/rental/estate/${this.estateSearchForm.id}`)
+      this.estate = res.data
+    },
+    async createEstate() {
+      const res = await axios.post('http://127.0.0.1:3000/rental/estate', this.estateForm)
+      console.log(res.data)
+    },
+    async searchLease() {
+      const res = await axios.get(`http://127.0.0.1:3000/rental/lease/${this.leaseSearchForm.id}/${this.leaseSearchForm.owner}/${this.leaseSearchForm.tenant}`)
+      this.lease = res.data
+    },
+    async createLease() {
+      const res = await axios.post('http://127.0.0.1:3000/rental/lease', {
+        ...this.leaseForm,
+        startDate: this.leaseForm.duration[0],
+        endDate: this.leaseForm.duration[1],
+      })
+      console.log(res.data)
+    },
+  }
+})
+</script>
+</body>
+</html>

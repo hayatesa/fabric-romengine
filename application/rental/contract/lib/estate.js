@@ -53,12 +53,12 @@ class Estate extends State {
         this.price = price;
     }
 
-    getMetaData() {
-        return this.metaData;
+    getMetadata() {
+        return this.metadata;
     }
 
-    setMetaData(metaData) {
-        this.metaData = metaData;
+    setMetadata(metadata) {
+        this.metadata = metadata;
     }
 
     static fromBuffer(buffer) {
